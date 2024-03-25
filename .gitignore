@@ -78,3 +78,6 @@ crashlytics-build.properties
 /.firebaserc
 /functions/.runtimeconfig.json
 
+# Downloaded NDK
+ndk/
+ndk_zip
