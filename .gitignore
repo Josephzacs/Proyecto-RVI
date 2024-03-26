@@ -72,12 +72,4 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
 
-# Firebase files and directories
-/firebase.json
-/firebase-debug.log
-/.firebaserc
-/functions/.runtimeconfig.json
-
-# Downloaded NDK
-ndk/
-ndk_zip
+/[Aa]ssets/Firebase/
