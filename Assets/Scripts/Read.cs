@@ -2,15 +2,16 @@ using UnityEngine;
 using UnityEngine.UI;
 using MySql.Data.MySqlClient;
 
+
 public class Read : MonoBehaviour
 {
     [Header("Database Properties")]
     public string Host = "localhost";
     public string User = "root";
     public string Password = "root";
-    public string Database = "test";
+    public string Database = "database";
 
-    public string Table = "Tabla";
+    public string Table = "table";
 
    
     private string connectionString;

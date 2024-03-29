@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "401071740190",
+    "project_id": "proyectorvi",
+    "storage_bucket": "proyectorvi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:401071740190:android:57a2fc559e04dbf4a3250f",
+        "android_client_info": {
+          "package_name": "com.UTEM.Laboratio.Biotecnolgia"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCd3asmn4--oDMetEA6509WkO_B8IRy8v4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
