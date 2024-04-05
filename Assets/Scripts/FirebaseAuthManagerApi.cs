@@ -2,9 +2,43 @@ using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections;
 using TMPro;
+using Ubiety.Dns.Core;
+using System;
+
+public class FirebaseAuth
+{
+    private static readonly Lazy<FirebaseAuth> lazy = new Lazy<FirebaseAuth>(() => new FirebaseAuth());
+
+    public static FirebaseAuth Instance { get { return lazy.Value; } }
+
+    public string IdToken { get; set; }
+    public string LocalId { get; set; }
+    public string RefreshToken { get; set; }
+
+    private FirebaseAuth() { }
+}
+
+
+
+
+[System.Serializable]
+public class FirebaseResponse
+{
+    public string localId;
+    public string idToken;
+    public string refreshToken;
+}
+
+
 public class FirebaseAuthManagerApi : MonoBehaviour
 {
-    public string apiKey = "AIzaSyCd3asmn4--oDMetEA6509WkO_B8IRy8v4"; // Obtén tu API Key de Firebase Console
+    public string apiKey = "AIzaSyCd3asmn4--oDMetEA6509WkO_B8IRy8v4";
+    private string databaseURL = "https://proyectorvi-default-rtdb.firebaseio.com/";
+
+    [Header("Data")]
+    public TMP_Text data;
+
+    
     [Header("Login")]
     public TMP_InputField emailLoginField;
     public TMP_InputField passwordLoginField;
@@ -26,6 +60,11 @@ public class FirebaseAuthManagerApi : MonoBehaviour
     {
         //Call the register coroutine passing the email, password, and username
         StartCoroutine(RegisterApi(emailRegisterField.text, passwordRegisterField.text));
+    }
+
+    public void GetDataButton()
+    {
+        StartCoroutine(GetDataFromFirebase());
     }
     IEnumerator LoginApi(string email,string password)
     {
@@ -56,6 +95,19 @@ public class FirebaseAuthManagerApi : MonoBehaviour
             Debug.Log(responseText);
             warningLoginText.text = "";
             confirmLoginText.text = "Logged In";
+
+            FirebaseResponse response = JsonUtility.FromJson<FirebaseResponse>(responseText);
+            FirebaseAuth.Instance.LocalId = response.localId;
+            FirebaseAuth.Instance.IdToken = response.idToken;
+            FirebaseAuth.Instance.RefreshToken = response.refreshToken;
+            Debug.Log("ID Token: " + FirebaseAuth.Instance.LocalId);
+            //StartCoroutine(GetDataFromFirebase());
+
+            yield return new WaitForSeconds(2);
+            UIManager.instance.userData();
+
+            confirmLoginText.text = "";
+
         }
         else
         {
@@ -90,6 +142,9 @@ public class FirebaseAuthManagerApi : MonoBehaviour
             string responseText = request.downloadHandler.text;
             Debug.Log(responseText);
             warningRegisterText.text="Registration successful!";
+            FirebaseResponse response = JsonUtility.FromJson<FirebaseResponse>(responseText);
+            string idToken = response.localId;
+            Debug.Log("ID Token: " + idToken);
 
         }
         else
@@ -100,7 +155,27 @@ public class FirebaseAuthManagerApi : MonoBehaviour
     }
 
 
+    IEnumerator GetDataFromFirebase()
+    {
+        string idToken = FirebaseAuth.Instance.IdToken;
+        Debug.Log("Refresh Token: " + idToken);
 
+
+        UnityWebRequest www = UnityWebRequest.Get(databaseURL + ".json?auth="+ idToken );
+
+        yield return www.SendWebRequest();
+
+        if (www.result != UnityWebRequest.Result.Success)
+        {
+            Debug.Log(www.error);
+        }
+        else
+        {
+            Debug.Log(www.downloadHandler.text);
+            data.text = www.downloadHandler.text;
+
+        }
+    }
 
 
 }

@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: UTEM
-  productName: Laboratorio.Biotecnologia
+  productName: Laboratio.Biotecnolgia
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -134,9 +134,12 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 0.1.1
+  bundleVersion: 0.1.2
   preloadedAssets:
   - {fileID: 11400000, guid: 1bd0056ca1c8e194ba1fdb1ecbdb2e6e, type: 2}
+  - {fileID: 11400000, guid: 2238d457089b9494896515a25debf01c, type: 2}
+  - {fileID: 1207672453085632980, guid: 190512a7e4be0f14db892b11a5973b9a, type: 2}
+  - {fileID: -9062342143870646071, guid: d46af47ef96b00a49825a3c49181afa0, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -162,7 +165,7 @@ PlayerSettings:
     Standalone: 0
     iPhone: 0
     tvOS: 0
-  overrideDefaultApplicationIdentifier: 1
+  overrideDefaultApplicationIdentifier: 0
   AndroidBundleVersionCode: 1
   AndroidMinSdkVersion: 23
   AndroidTargetSdkVersion: 0
@@ -243,7 +246,7 @@ PlayerSettings:
   useCustomMainManifest: 1
   useCustomLauncherManifest: 0
   useCustomMainGradleTemplate: 0
-  useCustomLauncherGradleManifest: 0
+  useCustomLauncherGradleManifest: 1
   useCustomBaseGradleTemplate: 1
   useCustomGradlePropertiesTemplate: 1
   useCustomProguardFile: 0

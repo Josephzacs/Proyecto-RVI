@@ -52,5 +52,8 @@
         "Temp/": true
     },
     "dotnet.preferCSharpExtension": true,
-    "dotnet.defaultSolution": "Proyecto-Rvi.sln"
+    "dotnet.defaultSolution": "Proyecto-Rvi.sln",
+    "files.watcherExclude": {
+        "**/target": true
+    }
 }

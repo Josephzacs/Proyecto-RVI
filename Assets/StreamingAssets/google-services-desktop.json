@@ -2,6 +2,7 @@
   "project_info": {
     "project_number": "401071740190",
     "project_id": "proyectorvi",
+    "firebase_url": "https://proyectorvi-default-rtdb.firebaseio.com",
     "storage_bucket": "proyectorvi.appspot.com"
   },
   "client": [
