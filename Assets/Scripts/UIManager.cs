@@ -39,10 +39,10 @@ public class UIManager : MonoBehaviour
         userDataUI.SetActive(false);
     }
 
-    public void userData()
+    public void Hide()
     {
         loginUI.SetActive(false);
         registerUI.SetActive(false);
-        userDataUI.SetActive(true);
+        userDataUI.SetActive(false);
     }
 }

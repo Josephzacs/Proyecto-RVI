@@ -9,6 +9,7 @@ TagManager:
   - Water
   - Destroyer
   - UI
+  - Esfera
   layers:
   - Default
   - TransparentFX

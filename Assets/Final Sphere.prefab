@@ -11,11 +11,11 @@ GameObject:
   - component: {fileID: 4264099002349685082}
   - component: {fileID: 4264099002349685083}
   - component: {fileID: 4264099002349685080}
-  - component: {fileID: 858379003070446927}
   - component: {fileID: -7275065961712651472}
+  - component: {fileID: 5343394698803897492}
   m_Layer: 0
   m_Name: Final Sphere
-  m_TagString: Untagged
+  m_TagString: Esfera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -85,18 +85,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &858379003070446927
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4264099002349685087}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fae893f317680374da0a2f3286b2f39f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!135 &-7275065961712651472
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -110,3 +98,16 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5000001
   m_Center: {x: 0, y: 0, z: 0.00000023841858}
+--- !u!114 &5343394698803897492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4264099002349685087}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19fa7e98b6109844da679929bc05d112, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectSphere: {fileID: 0}
