@@ -9,7 +9,7 @@ public class Score : MonoBehaviour
 {
     string localId = FirebaseManagerApi.localId;
     string idToken = FirebaseManagerApi.idToken;
-    string url = "https://proyectorvi-default-rtdb.firebaseio.com/users/";
+    string url = "";
     public TMP_Text scoreText; // Texto de la puntuación
     public static int score; // Puntuación
     bool isScoreSaved = false;
