@@ -10,8 +10,6 @@ public class UIManager : MonoBehaviour
     public GameObject loginUI;
     public GameObject registerUI;
 
-    public GameObject userDataUI;
-
     private void Awake()
     {
         if (instance == null)
@@ -30,19 +28,10 @@ public class UIManager : MonoBehaviour
     {
         loginUI.SetActive(true);
         registerUI.SetActive(false);
-        userDataUI.SetActive(false);
     }
     public void RegisterScreen() // Regester button
     {
         loginUI.SetActive(false);
         registerUI.SetActive(true);
-        userDataUI.SetActive(false);
-    }
-
-    public void Hide()
-    {
-        loginUI.SetActive(false);
-        registerUI.SetActive(false);
-        userDataUI.SetActive(false);
     }
 }

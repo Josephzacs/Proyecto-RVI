@@ -2733,7 +2733,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2119849370}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: FirebaseAuthManagerApi, Assembly-CSharp
         m_MethodName: RegisterButton
         m_Mode: 1
@@ -4109,7 +4109,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   loginUI: {fileID: 413099960}
   registerUI: {fileID: 501651136}
-  userDataUI: {fileID: 698333219}
 --- !u!4 &745735622
 Transform:
   m_ObjectHideFlags: 0
@@ -5544,7 +5543,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2119849370}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: FirebaseAuthManagerApi, Assembly-CSharp
         m_MethodName: GetDataButton
         m_Mode: 1
@@ -7248,7 +7247,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2119849370}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: FirebaseAuthManagerApi, Assembly-CSharp
         m_MethodName: LoginButton
         m_Mode: 1
@@ -10393,7 +10392,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2119849371}
-  - component: {fileID: 2119849370}
+  - component: {fileID: 2119849372}
   m_Layer: 0
   m_Name: api
   m_TagString: Untagged
@@ -10401,28 +10400,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2119849370
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2119849369}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca586b2aeb5ebc44f810687fa35cbbac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dataNombre: {fileID: 1130220073}
-  dataEmail: {fileID: 1924871532}
-  emailLoginField: {fileID: 450817374}
-  passwordLoginField: {fileID: 1137460269}
-  warningLoginText: {fileID: 211909023}
-  confirmLoginText: {fileID: 100292772}
-  emailRegisterField: {fileID: 24520844}
-  usernameRegisterField: {fileID: 1884417725}
-  passwordRegisterField: {fileID: 447413943}
-  warningRegisterText: {fileID: 2048278744}
 --- !u!4 &2119849371
 Transform:
   m_ObjectHideFlags: 0
@@ -10438,6 +10415,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2119849372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2119849369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de35aef4554db3b4d89b60b637ff5da9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dataNombre: {fileID: 0}
+  dataEmail: {fileID: 0}
+  emailLoginField: {fileID: 450817374}
+  passwordLoginField: {fileID: 1137460269}
+  warningLoginText: {fileID: 211909023}
+  confirmLoginText: {fileID: 100292772}
+  emailRegisterField: {fileID: 24520844}
+  usernameRegisterField: {fileID: 1884417725}
+  passwordRegisterField: {fileID: 447413943}
+  warningRegisterText: {fileID: 2048278744}
 --- !u!1 &2124906595
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,8 +15,8 @@ public class FirebaseManagerApi : MonoBehaviour
 {
     User user1 = new User();
     
-    private string apiKey = "AIzaSyCd3asmn4--oDMetEA6509WkO_B8IRy8v4";
-    private string databaseURL = "https://proyectorvi-default-rtdb.firebaseio.com/users/";
+    private string apiKey = "";
+    private string databaseURL = "";
 
     public static string localId;
     public static string idToken;
