@@ -15,8 +15,8 @@ public class FirebaseManagerApi : MonoBehaviour
 {
     User user1 = new User();
     
-    private string apiKey = "";
-    private string databaseURL = "";
+    private string apiKey = "AIzaSyCd3asmn4--oDMetEA6509WkO_B8IRy8v4";
+    private string databaseURL = "https://proyectorvi-default-rtdb.firebaseio.com/users/";
 
     public static string localId;
     public static string idToken;
@@ -85,6 +85,7 @@ public class FirebaseManagerApi : MonoBehaviour
             //FirebaseResponse response2 = JsonUtility.FromJson<FirebaseResponse>(response.Text);
             localId= response.localId;
             idToken = response.idToken;
+            
             GetUsername();
             /*FirebaseAuth.Instance.RefreshToken = response2.refreshToken;
             Debug.Log("ID Token: " + FirebaseAuth.Instance.LocalId);*/
@@ -162,6 +163,7 @@ public class FirebaseManagerApi : MonoBehaviour
             playerTime = "00:00";
             postToDatabase();
             
+            
         }).Catch(error =>
         {
             Debug.Log(error);
@@ -234,6 +236,7 @@ public class FirebaseManagerApi : MonoBehaviour
     
     
     }
+
 
     
 
