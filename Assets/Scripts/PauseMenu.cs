@@ -86,7 +86,7 @@ public class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;  // descongela el juego de la pausa
         GameIsPaused = false;
-        SceneTransitionManager.singleton.GoToSceneAsync(0);
+        SceneTransitionManager.singleton.GoToSceneAsync(1);
     }
 
 

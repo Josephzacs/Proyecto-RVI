@@ -7,10 +7,21 @@ using Proyecto26;
 
 public class QuestionaryControl : MonoBehaviour
 {
+
+    string localId = FirebaseManagerApi.localId;
+    string idToken = FirebaseManagerApi.idToken;
+    string url = "https://proyectorvi-default-rtdb.firebaseio.com/users/";
     public TMP_Text questionText;
     public TMP_Text answer1Text;
     public TMP_Text answer2Text;
     public TMP_Text answer3Text;
+
+
+    public TMP_Text resultText;
+   public TMP_Text timeText;
+   public TMP_Text UserName;
+
+   public GameObject resultPanel;
 
     public TMP_Text scoreText;
 
@@ -31,7 +42,7 @@ public class QuestionaryControl : MonoBehaviour
 
             questionText.text = response.pregunta;
             questionText.enableAutoSizing = true;
-            questionText.fontSizeMax= 20;
+            questionText.fontSizeMax= 10;
             questionText.alignment = TextAlignmentOptions.Center;
             answer1Text.text = response.opciones[0];
             answer1Text.enableAutoSizing = true;
@@ -53,6 +64,7 @@ public class QuestionaryControl : MonoBehaviour
     }
     void Start()
     {
+        resultPanel.SetActive(false);
         scoreText.text ="Preguntas correctas: "+score.ToString();
         StartCoroutine(SetQuestion());
     }
@@ -69,24 +81,28 @@ public class QuestionaryControl : MonoBehaviour
             score++;
             scoreText.text ="Preguntas correctas: "+score.ToString();
             if(indice == 9){
-                Debug.Log("Fin del juego");
+                saveScore();
+                setResults();
+                Time.timeScale = 0f;
             }
-            if(indice < 9){
+            if(indice <9){
             indice++;
             StartCoroutine(SetQuestion());
             }
             
         }
         else{
-            if(indice == 9){
-                Debug.Log("Fin del juego");
+           if(indice == 9){
+                saveScore();
+                setResults();
+                Time.timeScale = 0f;
             }
-            if(indice < 9){
+            if(indice <9){
             indice++;
             StartCoroutine(SetQuestion());
             }
-            Debug.Log("Incorrecto");
         }
+
     }
 
     public void OnBlueButtonPressed(){
@@ -95,22 +111,27 @@ public class QuestionaryControl : MonoBehaviour
             score++;
             scoreText.text ="Preguntas correctas: "+score.ToString();
             if(indice == 9){
-                Debug.Log("Fin del juego");
+                saveScore();
+                setResults();
+                Time.timeScale = 0f;
             }
             if(indice < 9){
             indice++;
             StartCoroutine(SetQuestion());
             }
         }
-        else{
-            if(indice == 9){
-                Debug.Log("Fin del juego");
+                else{
+           if(indice == 9){
+                saveScore();
+                setResults();
+                Time.timeScale = 0f;
             }
-            if(indice < 9){
+            if(indice <9){
             indice++;
             StartCoroutine(SetQuestion());
             }
         }
+
     }
     public void OnGreenButtonPressed(){
         if(correctAnswer == answer3Text.text){
@@ -118,22 +139,52 @@ public class QuestionaryControl : MonoBehaviour
             score++;
             scoreText.text ="Preguntas correctas: "+score.ToString();
             if(indice == 9){
-                Debug.Log("Fin del juego");
+                saveScore();
+                setResults();
+                Time.timeScale = 0f;
             }
-            if(indice < 9){
+            if(indice <9){
             indice++;
             StartCoroutine(SetQuestion());
             }
         }
-        else{
-            if(indice == 9){
-                Debug.Log("Fin del juego");
+                else{
+           if(indice == 9){
+                saveScore();
+                setResults();
+                Time.timeScale = 0f;
             }
-            if(indice < 9){
+            if(indice <9){
             indice++;
             StartCoroutine(SetQuestion());
             }
         }
+
     }
+
+        void saveScore(){
+            UserScore user = new UserScore();
+            user.score = score;
+            user.time = TimeControl.finalTime;
+            RestClient.Put(url + localId +"/actividad3"+ ".json?auth=" + idToken, user); // Guardamos la puntuación en la base de datos
+        }
+        void setResults(){
+        resultText.fontSizeMax = 15;
+        resultText.enableAutoSizing = true;
+        timeText.fontSizeMax = 15;
+        timeText.enableAutoSizing = true;
+        UserName.fontSizeMax = 15;
+        UserName.enableAutoSizing = true;
+        RestClient.Get<UserScore>(url + localId +"/actividad3"+ ".json?auth=" + idToken).Then(response =>{
+            
+            resultText.text = "Preguntas Correctas" + response.score;
+            timeText.text = response.time;
+            UserName.text = FirebaseManagerApi.playerName;
+        });
+        
+
+        resultPanel.SetActive(true);
+    }
+
 
 }

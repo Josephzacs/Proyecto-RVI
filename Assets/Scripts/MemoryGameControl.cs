@@ -2,14 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
+using Proyecto26;
 
 using TMPro;
 
 public class MemoryGameControl : MonoBehaviour
 {
-    private float timer = 0.0f;
-    private float waitTime = 1.0f;
 
+    string localId = FirebaseManagerApi.localId;
+    string idToken = FirebaseManagerApi.idToken;
+    string url = "https://proyectorvi-default-rtdb.firebaseio.com/users/";
     private int score = 0;
 
     public TMP_Text scoreText;
@@ -17,18 +19,26 @@ public class MemoryGameControl : MonoBehaviour
     public GameObject verde;
     public GameObject azul;
 
+    public TMP_Text resultText;
+   public TMP_Text timeText;
+   public TMP_Text UserName;
+
+   public GameObject resultPanel;
+
+   private int limitSequence = 10;
+
+
    
     private bool isplay = false;
     private int index = 1;
     private List<int> sequence;
 
     private List<int> result = new List<int>();
-   // private List<int> sequence2= new List<int> {0, 1, 2, 0, 1, 2, 0, 1, 2, 0};
 
-    // Start is called before the first frame   update
 
     void Start()
     {
+        resultPanel.SetActive(false);
         scoreText.text ="Pruebas completadas: "+score.ToString();
         GenerateColorSequence();
     }
@@ -42,6 +52,12 @@ public class MemoryGameControl : MonoBehaviour
     }
 
     private void GenerateColorSequence(){
+        if(index > limitSequence){
+            saveScore();
+            setResults();
+            Time.timeScale = 0f;
+            return;
+        }
         sequence = new List<int>();
         for(int i = 0; i < index; i++){
             sequence.Add(Random.Range(0, 3));
@@ -52,6 +68,7 @@ public class MemoryGameControl : MonoBehaviour
 
     }
     private IEnumerator PlaySequence(){
+        
        
         for(int i = 0; i < sequence.Count; i++){
             Debug.Log("Playing sequence at index: " + i);
@@ -94,7 +111,12 @@ public class MemoryGameControl : MonoBehaviour
                 sequence.Clear();
                 isplay = false;
                 GenerateColorSequence();
-            };
+            }
+            else{
+                saveScore();
+                setResults();
+                Time.timeScale = 0f;
+            }
         }
 
     }
@@ -109,7 +131,12 @@ public class MemoryGameControl : MonoBehaviour
                 sequence.Clear();
                 isplay = false;
                 GenerateColorSequence();
-            };
+            }
+            else{
+                saveScore();
+                setResults();
+                Time.timeScale = 0f;
+            }
         }
 
     }
@@ -124,7 +151,12 @@ public class MemoryGameControl : MonoBehaviour
                 sequence.Clear();
                 isplay = false;
                 GenerateColorSequence();
-            };
+            }            
+            else{
+                saveScore();
+                setResults();
+                Time.timeScale = 0f;
+            }
         }
 
     }
@@ -143,6 +175,31 @@ public class MemoryGameControl : MonoBehaviour
     void addScore(){
         score++;
         scoreText.text = "Pruebas completadas:"+score.ToString();
+    }
+
+
+            void saveScore(){
+            UserScore user = new UserScore();
+            user.score = score;
+            user.time = TimeControl.finalTime;
+            RestClient.Put(url + localId +"/actividad2"+ ".json?auth=" + idToken, user); // Guardamos la puntuación en la base de datos
+        }
+        void setResults(){
+        resultText.fontSizeMax = 15;
+        resultText.enableAutoSizing = true;
+        timeText.fontSizeMax = 15;
+        timeText.enableAutoSizing = true;
+        UserName.fontSizeMax = 15;
+        UserName.enableAutoSizing = true;
+        RestClient.Get<UserScore>(url + localId +"/actividad2"+ ".json?auth=" + idToken).Then(response =>{
+            
+            resultText.text = "Pruebas Completadas" + response.score;
+            timeText.text = response.time;
+            UserName.text = FirebaseManagerApi.playerName;
+        });
+        
+
+        resultPanel.SetActive(true);
     }
 
 }

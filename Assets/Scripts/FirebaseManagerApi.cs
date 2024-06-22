@@ -78,17 +78,15 @@ public class FirebaseManagerApi : MonoBehaviour
         
         RestClient.Post<SignResponse>("https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=" + apiKey, userData).Then(response =>
         {
-            //Debug.Log(response.Text);
             warningLoginText.text = "";
             confirmLoginText.text = "Logged In";
 
-            //FirebaseResponse response2 = JsonUtility.FromJson<FirebaseResponse>(response.Text);
+            
             localId= response.localId;
             idToken = response.idToken;
             
             GetUsername();
-            /*FirebaseAuth.Instance.RefreshToken = response2.refreshToken;
-            Debug.Log("ID Token: " + FirebaseAuth.Instance.LocalId);*/
+
             ChangeScene();
 
             confirmLoginText.text = "";
@@ -101,44 +99,7 @@ public class FirebaseManagerApi : MonoBehaviour
         yield return null;
 
 
-        /*// Configurar la solicitud HTTP
-        UnityWebRequest request = new UnityWebRequest(url, "POST");
-        byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(json);
-        request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
-        request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
-        request.SetRequestHeader("Content-Type", "application/json");
         
-
-        // Enviar la solicitud
-        yield return request.SendWebRequest();
-
-        // Manejar la respuesta
-        if (request.result == UnityWebRequest.Result.Success)
-        {
-            Debug.Log("Login successful!");
-            string responseText = request.downloadHandler.text;
-            Debug.Log(responseText);
-            warningLoginText.text = "";
-            confirmLoginText.text = "Logged In";
-
-            FirebaseResponse response = JsonUtility.FromJson<FirebaseResponse>(responseText);
-            FirebaseAuth.Instance.LocalId = response.localId;
-            FirebaseAuth.Instance.IdToken = response.idToken;
-            FirebaseAuth.Instance.RefreshToken = response.refreshToken;
-            Debug.Log("ID Token: " + FirebaseAuth.Instance.LocalId);
-            //StartCoroutine(GetDataFromFirebase());
-
-            yield return new WaitForSeconds(1);
-            UIManager.instance.userData();
-
-            confirmLoginText.text = "";
-
-        }
-        else
-        {
-            Debug.Log("Error: " + request.error);
-            warningLoginText.text=request.error;
-        }*/
     }
     IEnumerator RegisterApi(string email, string password, string username)
     {
@@ -152,7 +113,7 @@ public class FirebaseManagerApi : MonoBehaviour
 
         RestClient.Post<SignResponse>("https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=" + apiKey, userData).Then(response =>
         {
-            //Debug.Log(response.Text);
+            
             warningRegisterText.text = "Registration successful!";
            
             localId = response.localId;
@@ -170,65 +131,23 @@ public class FirebaseManagerApi : MonoBehaviour
             warningRegisterText.text = error.Message;
         });
         
-        // Configurar la solicitud HTTP
-        /*UnityWebRequest request = new UnityWebRequest(url, "POST");
-        byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(json);
-        request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
-        request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
-        request.SetRequestHeader("Content-Type", "application/json");
-
-        // Enviar la solicitud
-        yield return request.SendWebRequest();
-
-        // Manejar la respuesta
-        if (request.result == UnityWebRequest.Result.Success)
-        {
-            Debug.Log("Registration successful!");
-            string responseText = request.downloadHandler.text;
-            Debug.Log(responseText);
-            warningRegisterText.text="Registration successful!";
-            FirebaseResponse response = JsonUtility.FromJson<FirebaseResponse>(responseText);
-            string idToken = response.localId;
-            Debug.Log("ID Token: " + idToken);
-
-        }
-        else
-        {
-            Debug.Log("Error: " + request.error);
-            warningRegisterText.text=request.error;
-        }*/
+       
         yield return null;
     }
 
 
     IEnumerator GetDataFromFirebase()
     {
-       /* string localId = FirebaseAuth.Instance.LocalId;
-        string idToken = FirebaseAuth.Instance.IdToken;
-        Debug.Log("Refresh Token: " + idToken);*/
+       
 
         RestClient.Get<User>(databaseURL+localId+ ".json?auth="+idToken ).Then(response =>
         {
             dataNombre.text = response.name;
             dataEmail.text = response.email;
         });
-        /*UnityWebRequest www = UnityWebRequest.Get(databaseURL+localId+ ".json?auth="+idToken );
+        
 
-        yield return www.SendWebRequest();
-
-        if (www.result != UnityWebRequest.Result.Success)
-        {
-            Debug.Log(www.error);
-        }
-        else
-        {
-            User user = JsonUtility.FromJson<User>(www.downloadHandler.text);
-            Debug.Log(www.downloadHandler.text);
-            dataNombre.text = user.name;
-            dataEmail.text = user.email;
-        }*/
-
-        yield return null; // Add this line to ensure all code paths return a value
+        yield return null; 
     }
     public void postToDatabase(){
         User user = new User();
