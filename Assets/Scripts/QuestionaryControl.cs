@@ -10,7 +10,7 @@ public class QuestionaryControl : MonoBehaviour
 
     string localId = FirebaseManagerApi.localId;
     string idToken = FirebaseManagerApi.idToken;
-    string url = "https://proyectorvi-default-rtdb.firebaseio.com/users/";
+    string url = "";
     public TMP_Text questionText;
     public TMP_Text answer1Text;
     public TMP_Text answer2Text;
