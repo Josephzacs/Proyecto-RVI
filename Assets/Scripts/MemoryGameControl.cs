@@ -11,7 +11,7 @@ public class MemoryGameControl : MonoBehaviour
 
     string localId = FirebaseManagerApi.localId;
     string idToken = FirebaseManagerApi.idToken;
-    string url = "https://proyectorvi-default-rtdb.firebaseio.com/users/";
+    string url = "";
     private int score = 0;
 
     public TMP_Text scoreText;
