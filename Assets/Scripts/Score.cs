@@ -1,10 +1,10 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Proyecto26;
 using UnityEngine.SceneManagement;
-using MySqlX.XDevAPI.Common;
+using UnityEngine.UI;
+using System;
 
 public class Score : MonoBehaviour
 {
@@ -14,73 +14,76 @@ public class Score : MonoBehaviour
     public TMP_Text scoreText; // Texto de la puntuación
     public static int score; // Puntuación
     bool isScoreSaved = false;
+    bool isSetResults = false;
 
-   public GameObject resultPanel;
+    public GameObject resultPanel;
+    public TMP_Text resultText;
+    public TMP_Text timeText;
+    public TMP_Text UserName;
 
-   public TMP_Text resultText;
-   public TMP_Text timeText;
-   public TMP_Text UserName;
+    private int limitTime = 60;
 
-    public int limitTime= 1;
-
-   
-    void Start(){
+    void Start()
+    {
         resultPanel.SetActive(false);
-        score = 2; // Inicializamos la puntuación a 0
+        score = 2; // Inicializamos la puntuación a 2
         scoreText.text = "Objetos por Encontrar: " + score; // Actualizamos el texto de la puntuación
+        StartCoroutine(GameRoutine());
     }
 
-    void OnTriggerEnter(Collider other) {
-        if(other.CompareTag ("Player")){ // Si el objeto que ha entrado en el trigger tiene la etiqueta "Player"
-            score--; // Aumentamos la puntuación
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            score--; // Disminuimos la puntuación
             scoreText.text = "Objetos por Encontrar: " + score; // Actualizamos el texto de la puntuación
-            if(!isScoreSaved && score == 0){
-                isScoreSaved = true;
-                    UserScore user = new UserScore();
-                    user.score = 2;
-                    user.time = TimeControl.finalTime;
-                    RestClient.Put(url + localId +"/actividad1"+ ".json?auth=" + idToken, user); // Guardamos la puntuación en la base de datos
-                    setResults();
-                    Time.timeScale = 0f;
-                
-            }
-            
             Destroy(gameObject); // Destruimos el objeto
-        } 
+        }
     }
 
-    void Update(){
-        if(limitTime==TimeControl.minu && !isScoreSaved){
+    IEnumerator GameRoutine()
+    {
+        float startTime = Time.time;
+        while (Time.time - startTime < limitTime && score > 0)
+        {
+            yield return null; // Esperamos un frame
+        }
+
+        setResults();
+
+        if (!isScoreSaved)
+        {
             isScoreSaved = true;
             UserScore user = new UserScore();
             user.score = score;
             user.time = TimeControl.finalTime;
-            RestClient.Put(url + localId +"/actividad1"+ ".json?auth=" + idToken, user); // Guardamos la puntuación en la base de datos
-            
-            setResults();
-            Time.timeScale = 0f;
-            
+            RestClient.Put(url + localId + "/actividad1" + ".json?auth=" + idToken, user); // Guardamos la puntuación en la base de datos
         }
+
+        yield return new WaitForSeconds(5.0f); // Esperamos 2 segundos antes de cambiar de escena
+        LoadMenu();
     }
 
+    void setResults()
+    {
+        if (isSetResults)
+        {
+            return;
+        }
 
-    void setResults(){
-        resultText.fontSizeMax = 15;
+        int Result = 2 - score;
         resultText.enableAutoSizing = true;
-        timeText.fontSizeMax = 15;
         timeText.enableAutoSizing = true;
-        UserName.fontSizeMax = 15;
         UserName.enableAutoSizing = true;
-        RestClient.Get<UserScore>(url + localId +"/actividad1"+ ".json?auth=" + idToken).Then(response =>{
-            
-            resultText.text = "Objetos encontrados" + response.score;
-            timeText.text = response.time;
-            UserName.text = FirebaseManagerApi.playerName;
-        });
-        
-
+        resultText.text = "Objetos encontrados: " + Result.ToString();
+        timeText.text = "Tiempo: " + TimeControl.finalTime.ToString();
+        UserName.text = "Usuario: " + FirebaseManagerApi.playerName;
         resultPanel.SetActive(true);
+        isSetResults = true;
     }
 
-
+    void LoadMenu()
+    {
+        SceneTransitionManager.singleton.GoToSceneAsync(1);
+    }
 }

@@ -30,10 +30,19 @@ public class MemoryGameControl : MonoBehaviour
 
    
     private bool isplay = false;
+
+    bool isOver = false;
     private int index = 1;
     private List<int> sequence;
 
     private List<int> result = new List<int>();
+    public AudioSource correct;
+    public AudioSource incorrect;
+
+    private int limitTime = 120;
+
+    private bool show = false;
+
 
 
     void Start()
@@ -41,21 +50,41 @@ public class MemoryGameControl : MonoBehaviour
         resultPanel.SetActive(false);
         scoreText.text ="Pruebas completadas: "+score.ToString();
         GenerateColorSequence();
+        StartCoroutine(Timer());
     }
 
     // Update is called once per frame
     void Update()
     {
 
-
+        if(isOver){
+            setResults();
+        }
            
+    }
+
+    private IEnumerator Timer(){
+        float startTime = Time.time;
+        while(Time.time - startTime < limitTime){
+            yield return null;
+        }
+
+        setResults();
+
+        if(!isOver){
+            saveScore();
+            isOver = true;
+        } 
+
+        yield return new WaitForSeconds(5.0f);
+        loadMenu();
     }
 
     private void GenerateColorSequence(){
         if(index > limitSequence){
             saveScore();
-            setResults();
-            Time.timeScale = 0f;
+            isOver = true;
+            
             return;
         }
         sequence = new List<int>();
@@ -68,6 +97,7 @@ public class MemoryGameControl : MonoBehaviour
 
     }
     private IEnumerator PlaySequence(){
+    
         
        
         for(int i = 0; i < sequence.Count; i++){
@@ -106,6 +136,7 @@ public class MemoryGameControl : MonoBehaviour
         result.Add(0);
         if(result.Count == sequence.Count && isplay){
             if(CheckResult()){
+                correct.Play();
                 addScore();
                 result.Clear();
                 sequence.Clear();
@@ -113,9 +144,11 @@ public class MemoryGameControl : MonoBehaviour
                 GenerateColorSequence();
             }
             else{
-                saveScore();
-                setResults();
-                Time.timeScale = 0f;
+                incorrect.Play();
+                result.Clear();
+                sequence.Clear();
+                isplay = false;
+                GenerateColorSequence();
             }
         }
 
@@ -126,6 +159,7 @@ public class MemoryGameControl : MonoBehaviour
         result.Add(1);
         if(result.Count == sequence.Count && isplay){
              if(CheckResult()){
+                correct.Play();
                 addScore();
                 result.Clear();
                 sequence.Clear();
@@ -133,9 +167,11 @@ public class MemoryGameControl : MonoBehaviour
                 GenerateColorSequence();
             }
             else{
-                saveScore();
-                setResults();
-                Time.timeScale = 0f;
+                incorrect.Play();
+                result.Clear();
+                sequence.Clear();
+                isplay = false;
+                GenerateColorSequence();
             }
         }
 
@@ -146,6 +182,7 @@ public class MemoryGameControl : MonoBehaviour
         result.Add(2);
         if(result.Count == sequence.Count && isplay){
             if(CheckResult()){
+                correct.Play();
                 addScore();
                 result.Clear();
                 sequence.Clear();
@@ -153,9 +190,11 @@ public class MemoryGameControl : MonoBehaviour
                 GenerateColorSequence();
             }            
             else{
-                saveScore();
-                setResults();
-                Time.timeScale = 0f;
+                incorrect.Play();
+                result.Clear();
+                sequence.Clear();
+                isplay = false;
+                GenerateColorSequence();
             }
         }
 
@@ -185,21 +224,24 @@ public class MemoryGameControl : MonoBehaviour
             RestClient.Put(url + localId +"/actividad2"+ ".json?auth=" + idToken, user); // Guardamos la puntuación en la base de datos
         }
         void setResults(){
-        resultText.fontSizeMax = 15;
-        resultText.enableAutoSizing = true;
-        timeText.fontSizeMax = 15;
+            if(!show){
+                        resultText.enableAutoSizing = true;
+       
         timeText.enableAutoSizing = true;
-        UserName.fontSizeMax = 15;
+       
         UserName.enableAutoSizing = true;
-        RestClient.Get<UserScore>(url + localId +"/actividad2"+ ".json?auth=" + idToken).Then(response =>{
-            
-            resultText.text = "Pruebas Completadas" + response.score;
-            timeText.text = response.time;
-            UserName.text = FirebaseManagerApi.playerName;
-        });
+        resultText.text = "Pruebas completadas: "+score.ToString();
+        timeText.text = "Tiempo: "+TimeControl.finalTime.ToString();
+        UserName.text = "Usuario: "+FirebaseManagerApi.playerName;
         
 
         resultPanel.SetActive(true);
+        show = true;
+            }
+    }
+
+    void loadMenu(){
+        SceneTransitionManager.singleton.GoToSceneAsync(1);
     }
 
 }

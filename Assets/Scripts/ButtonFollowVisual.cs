@@ -15,6 +15,8 @@ public class ButtonFollowVisual : MonoBehaviour
     private Transform pokeAttachTransform;
     private XRBaseInteractable interactable;
     private bool isFollowing = false;
+
+    public float followAngle = 45;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,10 +30,17 @@ public class ButtonFollowVisual : MonoBehaviour
     public void Follow(BaseInteractionEventArgs hover){
         if(hover.interactorObject is XRPokeInteractor){
             XRPokeInteractor interactor = (XRPokeInteractor)hover.interactorObject;
-            isFollowing = true;
-            freeze = false;
+
             pokeAttachTransform = interactor.attachTransform;
             offset = visualTarget.position - pokeAttachTransform.position;
+
+
+            float pokeAngle = Vector3.Angle(offset, visualTarget.TransformDirection(localAxis));
+
+            if(pokeAngle < followAngle){
+                isFollowing = true;
+                freeze = false;
+            }
         }
     }
 

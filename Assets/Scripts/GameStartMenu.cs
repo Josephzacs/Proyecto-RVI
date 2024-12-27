@@ -11,6 +11,11 @@ public class GameStartMenu : MonoBehaviour
     public GameObject about;
     public GameObject start; 
 
+    public GameObject Laberinto;
+    public GameObject Preguntas;
+    public GameObject Memoria;
+
+
     [Header("Main Menu Buttons")]
     public Button startButton;
     public Button startButton2;
@@ -18,6 +23,10 @@ public class GameStartMenu : MonoBehaviour
     public Button optionButton;
     public Button aboutButton;
     public Button quitButton;
+    public Button LaberintoButton;
+    public Button PreguntasButton;
+    public Button MemoriaButton;
+
 
     public List<Button> returnButtons;
 
@@ -33,6 +42,9 @@ public class GameStartMenu : MonoBehaviour
         optionButton.onClick.AddListener(EnableOption);
         aboutButton.onClick.AddListener(EnableAbout);
         quitButton.onClick.AddListener(QuitGame);
+        LaberintoButton.onClick.AddListener(EnableLaberinto);
+        PreguntasButton.onClick.AddListener(EnablePreguntas);
+        MemoriaButton.onClick.AddListener(EnableMemoria);
 
         foreach (var item in returnButtons)
         {
@@ -69,6 +81,9 @@ public class GameStartMenu : MonoBehaviour
         options.SetActive(false);
         about.SetActive(false);
         start.SetActive(false);
+        Laberinto.SetActive(false);
+        Preguntas.SetActive(false);
+        Memoria.SetActive(false);
     }
 
     public void EnableMainMenu()
@@ -77,6 +92,9 @@ public class GameStartMenu : MonoBehaviour
         options.SetActive(false);
         about.SetActive(false);
         start.SetActive(false);
+        Laberinto.SetActive(false);
+        Preguntas.SetActive(false);
+        Memoria.SetActive(false);
     }
     public void EnableOption()
     {
@@ -84,6 +102,9 @@ public class GameStartMenu : MonoBehaviour
         options.SetActive(true);
         about.SetActive(false);
         start.SetActive(false);
+        Laberinto.SetActive(false);
+        Preguntas.SetActive(false);
+        Memoria.SetActive(false);
     }
     public void EnableAbout()
     {
@@ -91,6 +112,9 @@ public class GameStartMenu : MonoBehaviour
         options.SetActive(false);
         about.SetActive(true);
         start.SetActive(false);
+        Laberinto.SetActive(false);
+        Preguntas.SetActive(false);
+        Memoria.SetActive(false);
     }
     public void Enablestart()
     {
@@ -98,5 +122,38 @@ public class GameStartMenu : MonoBehaviour
         options.SetActive(false);
         about.SetActive(false);
         start.SetActive(true);
+        Laberinto.SetActive(false);
+        Preguntas.SetActive(false);
+        Memoria.SetActive(false);
+    }
+    public void EnableLaberinto()
+    {
+        mainMenu.SetActive(false);
+        options.SetActive(false);
+        about.SetActive(false);
+        start.SetActive(false);
+        Laberinto.SetActive(true);
+        Preguntas.SetActive(false);
+        Memoria.SetActive(false);
+    }
+    public void EnablePreguntas()
+    {
+        mainMenu.SetActive(false);
+        options.SetActive(false);
+        about.SetActive(false);
+        start.SetActive(false);
+        Laberinto.SetActive(false);
+        Preguntas.SetActive(true);
+        Memoria.SetActive(false);
+    }
+    public void EnableMemoria()
+    {
+        mainMenu.SetActive(false);
+        options.SetActive(false);
+        about.SetActive(false);
+        start.SetActive(false);
+        Laberinto.SetActive(false);
+        Preguntas.SetActive(false);
+        Memoria.SetActive(true);
     }
 }
